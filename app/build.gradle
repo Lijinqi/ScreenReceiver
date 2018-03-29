@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.lijinqi.screenreceiver"
+        minSdkVersion 21
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        flavorDimensions "versionCode"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        all32 { minSdkVersion 9 }
+        all64 { minSdkVersion 21 }
+        // armv5 {}
+        // armv7a {}
+        // arm64 { minSdkVersion 21 }
+        // x86 {}
+    }
+    buildToolsVersion '26.0.2'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    // required, enough for most devices.
+    //compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+
+    // Other ABIs: optional
+    //compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.4'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.4'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.4'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.4'
+
+
+    all32Compile project(':ijkplayer-armv5')
+    all32Compile project(':ijkplayer-armv7a')
+    all32Compile project(':ijkplayer-x86')
+
+    all64Compile project(':ijkplayer-armv5')
+    all64Compile project(':ijkplayer-armv7a')
+    all64Compile project(':ijkplayer-arm64')
+    all64Compile project(':ijkplayer-x86')
+    all64Compile project(':ijkplayer-x86_64')
+    compile project(path: ':ijkplayer-java')
+}
